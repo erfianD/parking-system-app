@@ -7,14 +7,14 @@
 
       <q-card-section>
         <q-input
-          v-model="username"
+          v-model="inputParam.username"
           label="Username"
           outlined
           dense
           class="q-mb-md"
         />
         <q-input
-          v-model="password"
+          v-model="inputParam.password"
           label="Password"
           type="password"
           outlined
@@ -27,30 +27,55 @@
           label="Login"
           color="primary"
           unelevated
+          @click="handleLogin"
         />
       </q-card-actions>
     </q-card>
   </q-page>
 </template>
 
-<!-- <script setup>
-import { ref } from 'vue'
+<script setup>
+import axios from 'axios'
+import { useRouter } from 'vue-router'
+import { reactive, ref } from 'vue'
 
-const username = ref('')
-const password = ref('')
+const router = useRouter()
+const inputParam = reactive({
+  username: '',
+  password: ''
+})
+
+const responseLogin = ref({
+  userId: '',
+  username: '',
+  password: '',
+  role: '',
+  token: '',
+  status: ''
+
+})
 
 function handleLogin () {
-  if (!username.value || !password.value) {
-    alert('Username dan password harus diisi.')
-    return
-  }
+  // if (!inputParam.username.value || !inputParam.password.value) {
+  //   alert('Username dan password harus diisi.')
+  //   return
+  // }
 
-  // Simulasi login
-  if (username.value === 'admin' && password.value === '1234') {
-    alert('Login berhasil!')
-    // TODO: redirect atau set token di sini
-  } else {
-    alert('Username atau password salah!')
-  }
+  axios.post('http://localhost:9095/users/login', inputParam)
+  .then((response) => {
+    responseLogin.value = response.data
+    if(responseLogin.value !== null) {
+      const role = responseLogin.value.role
+
+      localStorage.setItem('auth', 'true')
+      localStorage.setItem('role', role)
+
+      if (role === 'Operator Entry') {
+        router.push('/entryGate')
+      } else if (role === 'Operator Exit Gate 1') {
+        router.push('/exitGate')
+      }
+    }
+  })
 }
-</script> -->
+</script>

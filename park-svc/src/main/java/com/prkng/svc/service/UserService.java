@@ -1,7 +1,6 @@
 package com.prkng.svc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +19,7 @@ public class UserService {
     private CustomRepository customRepository;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    
-    // public UserService(BCryptPasswordEncoder passwordEncoder) {
-    //     this.passwordEncoder = passwordEncoder;
-    // }
+
     
     public Users addUser(UserDto userDto) {
 
@@ -33,6 +29,7 @@ public class UserService {
         String setPassword = regisUser(userDto.getUsername(), userDto.getPassword());
         userData.setPassword(setPassword);
         userData.setRole(userDto.getRole());
+        userData.setStatus(userDto.getStatus());
         usersRepository.save(userData);
         return userData;
     }

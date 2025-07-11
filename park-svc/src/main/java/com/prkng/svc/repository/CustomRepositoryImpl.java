@@ -94,7 +94,8 @@ public class CustomRepositoryImpl implements CustomRepository{
 
     @Override
     public Users getUserByUsername(String username) {
-       String query = "SELECT u FROM USERS u WHERE u.username = :username";
+    
+       String query = "SELECT u FROM Users u WHERE u.username = :username";
 
        return entityManager.createQuery(query, Users.class)
             .setParameter("username", username)
