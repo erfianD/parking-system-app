@@ -56,11 +56,6 @@ const responseLogin = ref({
 })
 
 function handleLogin () {
-  // if (!inputParam.username.value || !inputParam.password.value) {
-  //   alert('Username dan password harus diisi.')
-  //   return
-  // }
-
   axios.post('http://localhost:9095/users/login', inputParam)
   .then((response) => {
     responseLogin.value = response.data
@@ -74,7 +69,11 @@ function handleLogin () {
         router.push('/entryGate')
       } else if (role === 'Operator Exit Gate 1') {
         router.push('/exitGate')
+      } else if (role === 'Operator Exit Gate 2') {
+        router.push('/exitGate')
       }
+    } else if (responseLogin.value === null) {
+      alert('User tidak ditemukan. Silakan hubungi administrator.')
     }
   })
 }

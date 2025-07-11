@@ -17,6 +17,7 @@
           </q-card-section>
           <q-card-actions align="center">
             <q-btn label="Submit" color="primary" unelevated @click="submit"/>
+            <q-btn label="Logout" color="primary" unelevated @click="logout"/>
           </q-card-actions>
         </q-card>
       </div>
@@ -41,7 +42,9 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const inputParam = reactive({
   platKendaraan: '',
   jenisKendaraan: ''
@@ -92,6 +95,10 @@ function getSlotParkir() {
     console.log(response.data)
     parkingRow.value = response.data
   })
+}
+
+function logout() {
+  router.push('/login')
 }
 
 onMounted(() => {

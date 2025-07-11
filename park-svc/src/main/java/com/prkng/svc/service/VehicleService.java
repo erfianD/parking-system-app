@@ -82,6 +82,7 @@ public class VehicleService {
         vehicleUpdate.setStatus("Out");
         vehicleUpdate.setPlatNomor(parking.getPlatKendaraan());
         vehicleUpdate.setJenisKendaraan(parking.getJenisKendaraan());
+
         int status = customRepo.updateVehicle(vehicleUpdate.getJamKeluar(), vehicleUpdate.getTotalTarif(), hours, vehicleUpdate.getPlatNomor(), 
             vehicleUpdate.getJenisKendaraan(), vehicleUpdate.getStatus());
 
@@ -90,7 +91,7 @@ public class VehicleService {
         parkingDto.setJenisKendaraan(parking.getJenisKendaraan());
 
         if (status == 200) {
-            if (parkingDto != null) parkingService.vehicleOutSlotAvail(parkingDto);
+            // if (parkingDto != null) parkingService.vehicleOutSlotAvail(parkingDto);
             vehicleData = customRepo.findByPlatNo(parking.getPlatKendaraan(), parking.getJenisKendaraan());
         }
         
